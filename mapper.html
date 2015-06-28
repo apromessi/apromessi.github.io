@@ -1,0 +1,86 @@
+<html>
+<head>
+  <link rel="stylesheet" href="foundation.css" />
+
+<style type="text/css">
+#wrapper { position: relative; }
+ #movie-info {
+   float: right;
+   background-color: white;
+   /*position: absolute;*/
+   top: 10px;
+   left: 10px;
+   z-index: 99; }
+      /*html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}*/
+      /*#movie-info { height: 25%;}*/
+      #map-canvas { height: 100%; margin: 0; padding: 0;}
+
+.has-form {
+  position: absolute;
+  top: 0;
+  left: 6rem;
+  min-width: 14rem; }
+  @media only screen and (max-width: 40em) {
+    .has-form {
+      min-width: 10rem;
+      top: 0.5rem; }
+      .has-form .button {
+        height: 1.85rem; } }
+</style>
+	<script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAh-L2_rpdgzXHVAxXetN496UR8HR9mFTM
+">
+	</script>
+  <script src="search-by-title.js"></script>
+  <script src="rsvp.min.js"></script>
+  <script src="geofire.min.js"></script>
+  <script src="lodash.min.js"></script>
+  <script src="draggable-movie-search.js"></script>
+  <script src="mapper.js"></script>
+</head>
+<body>
+
+  <nav class="top-bar" data-topbar role="navigation">
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="#">Search</a></h1>
+    </li>
+    <li class="has-form">
+      <div class="row collapse">
+        <div class="large-8 small-9 columns">
+          <form id="title-form">
+          <input type="text" id="title" name="title" placeholder=" &nbsp; Movie Titles">
+        </div>
+        <div class="large-4 small-3 columns">
+          <button type="submit" id="submit-title">Go</button>
+          <!-- <a href="#" class="alert button expand">Go</a>-->
+        </div>
+    </form>
+      </div>
+
+    </li>
+
+     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+    <!--<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>-->
+  </ul>
+
+  </nav>
+	<!-- <form id="title-form"> -->
+		<!-- <label> -->
+      <!-- <input type="text" id="title" name="title"> -->
+    <!-- </label> -->
+		<!-- <button type="submit" id="submit-title">Enter movie title</button> -->
+	<!-- </form> -->
+
+
+
+  <div id="movie-info">
+  
+  </div>
+	<div id="map-canvas"></div>
+
+
+</body>
+</html>

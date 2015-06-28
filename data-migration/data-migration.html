@@ -1,0 +1,87 @@
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
+<script>
+  // Read data from Firebaes
+
+  var myFirebaseRef = new Firebase("https://fiery-fire-3549.firebaseio.com/");
+  var destinationTable = myFirebaseRef.child("transformed-data3");
+  destinationTable.remove();
+
+  myFirebaseRef.child("data").on("value", function(snapshot) {
+    
+    function processRow(row,timeout){
+      setTimeout(function(){
+        var placeName = row[10];
+        if (placeName){
+          var uri = "http://maps.googleapis.com/maps/api/geocode/json?address="+placeName+",San Francisco&sensor=false"; 
+          var res = encodeURI(uri);
+          console.log("*****",res);
+
+          $.getJSON(res,function(data){
+              console.log("data",data);
+              console.log("data.results",data.results);
+              // Check to see whether results contains any data
+              if (data.results.length){
+                var lat = data.results[0].geometry.location.lat;
+                var lng = data.results[0].geometry.location.lng;  
+                console.log(lat+"/"+lng);
+
+                var request = new XMLHttpRequest();
+                var movieName = row[8]; 
+
+                var toPush = {
+                  movieName: movieName,
+                  year : row[9] || '',
+                  director : row[14] || '',
+                  actor1 : row[16] || '',
+                  actor2 : row[17] || '',
+                  actor3 : row[18] || '',
+                  locationName: row[10],
+                  lat: lat,
+                  lon: lng
+                }
+                
+                function onComplete(error){
+                  if (error){
+                    console.log("Synchronization failed");
+                  } else {
+                    console.log("Synchronization succeeded");
+                  }
+                }
+
+                var ref = destinationTable.push(toPush, onComplete);
+
+                request.open('GET', 'https://api.themoviedb.org/3/search/movie?api_key=200e557a74bd0d431095ee5891427117&query='+movieName);
+
+                request.setRequestHeader('Accept', 'application/json');
+
+                request.onreadystatechange = function () {
+                  if (this.readyState === 4) {
+                    // console.log('Status:', this.status);
+                    // console.log('Headers:', this.getAllResponseHeaders());
+                    // console.log(this.responseText);
+                    var json = JSON.parse(this.responseText);
+                    if (json.results.length){
+                      var imgLink = "https://image.tmdb.org/t/p/w185/" + json.results[0].poster_path;
+                      ref.child("imgLink").set(imgLink);
+                    }
+                  }
+                };
+
+                request.send();
+              }
+          });
+        }
+      },timeout)
+    }
+    var k = 0
+    snapshot.val().forEach(function(row){
+      k = k+1
+      var timeout = k*250;
+      processRow(row,timeout);
+    });
+  });
+
+</script>
+</html>

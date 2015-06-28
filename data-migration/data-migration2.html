@@ -1,0 +1,32 @@
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<!-- RSVP -->
+<script src="rsvp.min.js"></script>
+
+<!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.5/firebase.js"></script>
+
+<!-- GeoFire -->
+<script src="https://cdn.firebase.com/libs/geofire/3.2.2/geofire.min.js"></script>
+<script>
+  // Read data from Firebaes
+
+  var myFirebaseRef = new Firebase("https://fiery-fire-3549.firebaseio.com/");
+  var destinationTable = myFirebaseRef.child("transformed-data2");
+
+  var geoFire = new GeoFire(myFirebaseRef.child("geofire"));
+
+  destinationTable.on('child_added', function (snapshot) {
+    var thing = snapshot.val();
+    console.log(snapshot.key())
+    geoFire.set(snapshot.key(), [thing.lat, thing.lon]).then(function() {
+  console.log("Provided key has been added to GeoFire");
+}, function(error) {
+  console.log("Error: " + error);
+});
+  });
+
+
+
+</script>
+</html>
