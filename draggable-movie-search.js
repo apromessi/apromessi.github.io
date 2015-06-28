@@ -1,13 +1,12 @@
-
-// Set the center as Firebase HQ
+//
+// // Set the center as Firebase HQ
 var locations = {
-  "FirebaseHQ": [37.785326, -122.405696],
-  "Caltrain": [37.7789, -122.3917]
+  "center": [37.7686922,-122.4417199],
 };
-var center = locations["FirebaseHQ"];
+var center = locations.center;
 
 // Query radius
-var radiusInKm = 0.1;
+var radiusInKm = 0.5;
 
 // Get a reference to the Firebase public transit open data set
 var transitFirebaseRef = new Firebase("https://fiery-fire-3549.firebaseio.com/")
@@ -31,30 +30,20 @@ var geoQuery = geoFire.query({
 /* Adds new vehicle markers to the map when they enter the query */
 geoQuery.on("key_entered", function(id, latLng) {
 
+      moviesInQuery[id] = 'pending'
+
       transitFirebaseRef.child("transformed-data3").child(id).on("value", function(snap){
-        console.log(snap.val());
-        console.log(snap.key());
-        console.log(id);
+
+      if (moviesInQuery[id] == 'pending') {
         var createdMarker = createVehicleMarker({lat:latLng[0], lon:latLng[1], movieName: snap.val().movieName,
           year: snap.val().year, director: snap.val().director, imgLink: snap.val().imgLink});
-
-        if (createdMarker) {
-          if (!moviesInQuery[id]) {
-            moviesInQuery[id] = createdMarker
-          }
-
-          else {
-            console.log("Already exist");
-          }
-
-        }
-
-        else {
-          console.log("Failed to create marker");
-        }
+        moviesInQuery[id] = createdMarker
+      }
+      else {
+        console.log("Already exist");
+      }
 
       });
-
 });
 
 /* Removes vehicle markers from the map when they exit the query */
@@ -68,7 +57,10 @@ geoQuery.on("key_exited", function(id, latLng) {
   //
   // });
   if (moviesInQuery[id]) {
-    moviesInQuery[id].setMap(null);
+    if (moviesInQuery[id].setMap) {
+      moviesInQuery[id].setMap(null);
+    }
+
     // Remove the vehicle from the list of vehicles in the query
     delete moviesInQuery[id];
     console.log(moviesInQuery)
