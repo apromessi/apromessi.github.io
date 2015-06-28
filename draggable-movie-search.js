@@ -35,25 +35,49 @@ geoQuery.on("key_entered", function(id, latLng) {
         console.log(snap.val());
         console.log(snap.key());
         console.log(id);
-        moviesInQuery[id] = createVehicleMarker({lat:latLng[0], lon:latLng[1], movieName: snap.val().movieName,
+        var createdMarker = createVehicleMarker({lat:latLng[0], lon:latLng[1], movieName: snap.val().movieName,
           year: snap.val().year, director: snap.val().director, imgLink: snap.val().imgLink});
+
+        if (createdMarker) {
+          if (!moviesInQuery[id]) {
+            moviesInQuery[id] = createdMarker
+          }
+
+          else {
+            console.log("Already exist");
+          }
+
+        }
+
+        else {
+          console.log("Failed to create marker");
+        }
 
       });
 
 });
 
 /* Removes vehicle markers from the map when they exit the query */
+
 geoQuery.on("key_exited", function(id, latLng) {
   // Get the vehicle from the list of vehicles in the query
-  transitFirebaseRef.child("transformed-data3").child(id).on("value", function(snap){
-    movies = snap.val();
-    var movie = {lat:latLng[0], lon:latLng[1]};
+  // transitFirebaseRef.child("transformed-data3").child(id).on("value", function(snap){
+  //   movies = snap.val();
+  //   var movie = {lat:latLng[0], lon:latLng[1]};
+  //
+  //
+  // });
+  if (moviesInQuery[id]) {
+    moviesInQuery[id].setMap(null);
+    // Remove the vehicle from the list of vehicles in the query
+    delete moviesInQuery[id];
+    console.log(moviesInQuery)
+  }
 
+  else {
+    console.log("Not being removed");
+  }
 
-  });
-  moviesInQuery[id].setMap(null);
-  // Remove the vehicle from the list of vehicles in the query
-  delete moviesInQuery[id];
 });
 
 
@@ -63,19 +87,32 @@ geoQuery.on("key_exited", function(id, latLng) {
 /**********************/
 /* Adds a marker for the inputted vehicle to the map */
 function createVehicleMarker(movie) {
-  console.log(movie.movieName);
-  console.log(movie.year);
+  console.log("Movie: " + JSON.stringify(movie));
 
 
-  var marker = new google.maps.Marker({
-    icon: new google.maps.MarkerImage(movie.imgLink, undefined, undefined, undefined, new google.maps.Size(50,50)),
-    // icon:'"<div>" + movie.movieName + "</div>"',
-    position: new google.maps.LatLng(movie.lat, movie.lon),
-    optimized: true,
-    map: map
-  });
+  if (movie.imgLink) {
+    var marker = new google.maps.Marker({
+      icon: new google.maps.MarkerImage(movie.imgLink, undefined, undefined, undefined, new google.maps.Size(50,50)),
+      // icon:'"<div>" + movie.movieName + "</div>"',
+      position: new google.maps.LatLng(movie.lat, movie.lon),
+      optimized: true,
+      map: map
+    });
+  }
 
-  return marker;
+  else {
+    var marker = new google.maps.Marker({
+      icon: new google.maps.MarkerImage('http://imagine.inrialpes.fr/people/Damien.Rohmer/documents/publications/10_sigasia_wrinkle/thumbnail/thumbnail_movie.png', undefined, undefined, undefined, new google.maps.Size(50,50)),
+      // icon:'"<div>" + movie.movieName + "</div>"',
+      position: new google.maps.LatLng(movie.lat, movie.lon),
+      optimized: true,
+      map: map
+    });
+  }
+
+
+    return marker;
+
 
 }
 
