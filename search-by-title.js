@@ -4,7 +4,10 @@ function removeMarkers(){
 		markers[i].setMap(null);
 	}
 }
-
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
 	var ref = new Firebase("https://fiery-fire-3549.firebaseio.com/");
 
 	$(document).ready(function() {
@@ -13,7 +16,8 @@ function removeMarkers(){
 			evt.preventDefault();
 			removeMarkers();
 			$("#movie-info").empty();
-			var title = $("#title").val(); // pull in movie title
+			var title = $("#title").val(); 
+			var title2 = toTitleCase(title)// pull in movie title
 // street view setup
 
 
@@ -21,7 +25,7 @@ function removeMarkers(){
 // and makes markers at each lat lon and drops them onto the map
 			ref.child("transformed-data3")
 				.orderByChild("movieName")
-				.equalTo(title).on("child_added", function(snap) {
+				.equalTo(title2).on("child_added", function(snap) {
 					var value = snap.val();
 					var lat = value.lat;
 					var lon = value.lon;
