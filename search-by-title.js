@@ -19,7 +19,7 @@ function removeMarkers(){
 
 // The following loops through all movie objects with the specified movie title in firebase
 // and makes markers at each lat lon and drops them onto the map
-			ref.child("transformed-data2")
+			ref.child("transformed-data3")
 				.orderByChild("movieName")
 				.equalTo(title).on("child_added", function(snap) {
 					var value = snap.val();
