@@ -1,7 +1,7 @@
 //
 // // Set the center as Firebase HQ
 var locations = {
-  "center": [37.7686922,-122.4417199],
+  "center": [37.7458, 122.4416],
 };
 var center = locations.center;
 
