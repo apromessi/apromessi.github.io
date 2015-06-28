@@ -7,7 +7,7 @@ var locations = {
 var center = locations["FirebaseHQ"];
 
 // Query radius
-var radiusInKm = 0.5;
+var radiusInKm = 0.1;
 
 // Get a reference to the Firebase public transit open data set
 var transitFirebaseRef = new Firebase("https://fiery-fire-3549.firebaseio.com/")
@@ -36,15 +36,9 @@ geoQuery.on("key_entered", function(id, latLng) {
         console.log(snap.key());
         console.log(id);
         moviesInQuery[id] = createVehicleMarker({lat:latLng[0], lon:latLng[1], movieName: snap.val().movieName,
-          year: snap.val().year, director: snap.val().director});
+          year: snap.val().year, director: snap.val().director, imgLink: snap.val().imgLink});
 
       });
-      for(themovie=0; themovie<moviesInQuery.keys().length; themovie++) {
-        // add movie info to div...another query outside for loop?
-        $("#movie-info").html("<li><ul>"+ movie.movieName
-        +"</ul><ul>"+ movie.year
-        +"</ul><ul>"+movie.director+"</ul></li>");
-      }
 
 });
 
@@ -71,9 +65,11 @@ geoQuery.on("key_exited", function(id, latLng) {
 function createVehicleMarker(movie) {
   console.log(movie.movieName);
   console.log(movie.year);
+
+
   var marker = new google.maps.Marker({
-    // icon: "http://www.lutece.paris.fr/tech/images/helloworld.png",
-    icon:'"<div>" + movie.movieName + "</div>"',
+    icon: new google.maps.MarkerImage(movie.imgLink, undefined, undefined, undefined, new google.maps.Size(50,50)),
+    // icon:'"<div>" + movie.movieName + "</div>"',
     position: new google.maps.LatLng(movie.lat, movie.lon),
     optimized: true,
     map: map
