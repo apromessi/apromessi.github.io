@@ -4,10 +4,10 @@ var markers = [];
 
 function initialize() {
 
-  var myLatlng = new google.maps.LatLng(37.775, -122.4183333);
+  var myLatlng = new google.maps.LatLng(37.7686922,-122.4417199,13);
   console.log(myLatlng)
   var mapOptions = {
-    zoom: 12,
+    zoom: 13,
     center: myLatlng
   }
 	// create map at the hard-coded lat long for San Francisco

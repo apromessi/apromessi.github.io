@@ -53,10 +53,10 @@ function removeMarkers(){
 // add movie info to div...another query outside for loop?
 				$("#movie-info").html(
 '<div class="row">'
-+'<div class="panel">'
-+		'<h3>'+ title + '</h3>'
-+		'<p>' + value.year + '</p>'
-+		'<p>' + value.director + '</p>'
++'<div class="panel" style="background-color:#1a1917; color:white; border:none">'
++		'<h3 style="color:white">'+ title + '</h3>'
++		'<p style="color:white">' + value.year + '</p>'
++		'<p style="color:white">' + value.director + '</p>'
 +		'<div><img src="' + value.imgLink + '"></div>'
 
 
