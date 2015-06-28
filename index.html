@@ -42,7 +42,7 @@
 </head>
 <body>
 
-  <nav class="top-bar" data-topbar role="navigation">
+  <nav style="background-color='black'" class="top-bar" data-topbar role="navigation">
   <ul class="title-area">
     <li class="name">
       <h1><a href="#">Search</a></h1>
@@ -61,10 +61,15 @@
       </div>
 
     </li>
+  </ul>
 
      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-    <li class="toggle-topbar menu-icon"><a href="#"><img src='./static/movie_imgs.jpg'/></a></li>
-  </ul>
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="top-bar right"><a href="#"><img style="height:50px" src='./static/movie_imgs.jpg'/></a></li>
+        <li class="top-bar right"><a href="#"><span>Movie Mapper</span></a></li>
+      </ul>
+    </section>
 
   </nav>
 	<!-- <form id="title-form"> -->
