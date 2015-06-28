@@ -2040,7 +2040,7 @@ meta.foundation-mq-topbar {
 
 @media only screen and (min-width: 40.0625em) {
   .top-bar {
-    background: #000000;
+    background: #1a1917;
     overflow: visible; }
     .top-bar:before, .top-bar:after {
       content: " ";
@@ -2090,7 +2090,7 @@ meta.foundation-mq-topbar {
       background: #222222;
       color: #FFFFFF; }
     .top-bar-section li:not(.has-form) a:not(.button) {
-      background: #000000;
+      background: #1a1917;
       line-height: 2.8125rem;
       padding: 0 0.9375rem; }
       .top-bar-section li:not(.has-form) a:not(.button):hover {
