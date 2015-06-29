@@ -27,6 +27,20 @@
       top: 0.5rem; }
       .has-form .button {
         height: 1.85rem; } }
+
+a {
+  color: #ff7f00;
+}
+
+.footer {
+  @include panel($panel-color, $panel-padding);
+  width: 100%;
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  background-color: #1a1917
+}
+
 </style>
 	<script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
@@ -87,7 +101,7 @@
   </div>
 	<div id="map-canvas"></div>
 
-  <div class="row">
+  <div class="row footer">
     <div class="twelve columns" style=style="background-color:#1a1917; height:30px; bottom:0;">
     <ul class="inline-list">
       <li style="color:white">Developers:</li>
