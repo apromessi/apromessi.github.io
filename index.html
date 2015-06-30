@@ -27,6 +27,20 @@
       top: 0.5rem; }
       .has-form .button {
         height: 1.85rem; } }
+
+a {
+  color: #ff7f00;
+}
+
+.footer {
+  @include panel($panel-color, $panel-padding);
+  width: 100%;
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  background-color: #1a1917
+}
+
 </style>
 	<script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://cdn.firebase.com/js/client/2.2.7/firebase.js"></script>
@@ -41,7 +55,7 @@
   <script src="draggable-movie-search.js"></script>
   <script src="mapper.js"></script>
 </head>
-<body style="background-color:#1a1917">
+<body style="background-color:#1a1917; height:auto">
 
   <nav class="top-bar" data-topbar role="navigation">
   <ul class="title-area">
@@ -86,6 +100,18 @@
   
   </div>
 	<div id="map-canvas"></div>
+
+  <div class="row footer">
+    <div class="twelve columns" style=style="background-color:#1a1917; height:30px; bottom:0;">
+    <ul class="inline-list">
+      <li style="color:white">Developers:</li>
+      <li><a href="https://www.linkedin.com/in/arianapromessi">Ariana Promessi</a></li>
+      <li><a href="https://www.linkedin.com/in/alenajk">Alena Kuczynski</a></li>
+      <li><a href="https://www.linkedin.com/in/angelacastanieto">Angela Castanieto</a></li>
+      <li><a href="https://www.linkedin.com/in/tiffanywilliamsphd">Tiffany Williams</a></li>
+    </ul>
+  </div>
+  </div>
 
 
 </body>

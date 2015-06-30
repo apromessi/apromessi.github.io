@@ -47,3 +47,4 @@ function initialize() {
 
 // render map on div
 google.maps.event.addDomListener(window, 'load', initialize);
+
